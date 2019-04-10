@@ -1,5 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {loadCss, loadModules} from 'esri-loader';
+import {EarthquakesService} from './earthquakes/earthquakes.service';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,10 @@ import {loadCss, loadModules} from 'esri-loader';
 })
 export class AppComponent implements OnInit {
   @ViewChild('viewDiv') mapEl: ElementRef;
+
+  constructor(private earthquakesService: EarthquakesService) {
+    earthquakesService.loadLatestEarthquakes().then(console.log);
+  }
 
   ngOnInit(): void {
     loadModules(['esri/Map', 'esri/views/SceneView', 'esri/layers/WMSLayer'], {css: true}).then(([Map, SceneView, WMSLayer]) => {
